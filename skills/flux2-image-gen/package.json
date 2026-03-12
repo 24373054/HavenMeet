@@ -1,0 +1,13 @@
+{
+  "name": "flux2-image-gen",
+  "version": "1.0.0",
+  "description": "Generate or edit images using your own Flux2 API server",
+  "main": "flux2_image.py",
+  "scripts": {
+    "generate": "python scripts/flux2_generate.py",
+    "edit": "python scripts/flux2_edit.py"
+  },
+  "dependencies": [
+    "requests>=2.31.0"
+  ]
+}

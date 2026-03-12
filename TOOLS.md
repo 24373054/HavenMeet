@@ -62,23 +62,29 @@ python3 scripts/flux2_generate.py \
   --width 1024 --height 1024
 ```
 
-## 📸 飞书图片发送 (Feishu Image Sharing)
+## 📸 飞书消息发送 (Feishu Message Sending)
+
+### ⚠️ 重要原则
+**永远使用机器人身份发送消息！**
+- ✅ 使用 `message` 工具（机器人身份）
+- ❌ 禁止使用 `feishu_im_user_message` 工具（用户身份）
+- 原因：用用户身份发送的消息会显示为用户本人发送，容易造成混淆
 
 ### 问题背景
-飞书 API 对图片消息发送有限制：
-- **私信场景**：可以直接发送图片（使用 `feishu_im_user_message` + `image` 类型）
-- **群聊场景**：无法直接发送图片，需要先上传到云空间再分享链接
+飞书 API 对图片/文件消息发送有限制：
+- **私信场景**：机器人可以直接发送图片
+- **群聊场景**：机器人无法直接发送图片，需要先上传到云空间再分享链接
 
 ### 解决方案
 
-#### 1️⃣ 私信发送图片（直接发送）
+#### 1️⃣ 发送文本消息（机器人身份）
 ```javascript
-// 使用 feishu_im_user_message 工具
-action: send
-msg_type: image
-receive_id_type: open_id
-receive_id: ou_xxx
-content: {"image_key": "img_xxx"}
+// 使用 message 工具（推荐！）
+message:
+  action: send
+  channel: feishu
+  to: oc_xxx  # 群聊 ID 或 ou_xxx 用户 ID
+  message: "消息内容"
 ```
 
 #### 2️⃣ 群聊发送图片（上传云空间 + 分享链接）
@@ -87,29 +93,54 @@ content: {"image_key": "img_xxx"}
 feishu_drive_file:
   action: upload
   file_path: /path/to/image.png
+// 返回：{"file_name": "xxx.png", "size": 123456}
 
-// Step 2: 发送文本消息包含链接
-feishu_im_user_message:
+// Step 2: 获取 doc_token（通过 get_meta 查询）
+feishu_drive_file:
+  action: get_meta
+  request_docs: [{"doc_token": "xxx", "doc_type": "file"}]
+
+// Step 3: 用机器人身份发送包含链接的消息
+message:
   action: send
-  msg_type: text
-  receive_id_type: chat_id
-  receive_id: oc_xxx
-  content: {"text": "图片已上传到云空间，链接：https://xxx.feishu.cn/file/xxx"}
+  channel: feishu
+  to: oc_xxx
+  message: "🔗 图片链接：https://keentropy.feishu.cn/file/{doc_token}"
+```
+
+**⚠️ 链接格式重要说明：**
+- ✅ 正确格式：`https://keentropy.feishu.cn/file/{doc_token}`
+- `doc_token` 是飞书返回的唯一标识符（如 `QjvDb1mERoxzR2xGPiIc3wUPn6c`）
+- ❌ **不是文件名！** 不能用 `https://keentropy.feishu.cn/file/文件名.png`
+- 需要通过 `feishu_drive_file get_meta` 获取文件的 `doc_token`
+- 示例：
+  - ✅ `https://keentropy.feishu.cn/file/QjvDb1mERoxzR2xGPiIc3wUPn6c`
+  - ❌ `https://keentropy.feishu.cn/file/2026-03-12-18-44-havenmeet-robot.png`
+
+#### 3️⃣ 私信发送图片（机器人身份）
+```javascript
+// 使用 message 工具发送图片
+message:
+  action: send
+  channel: feishu
+  to: ou_xxx
+  media: /path/to/image.png
 ```
 
 ### 工作流程
-1. **生成/获取图片** → 保存到本地（如 `/tmp/openclaw/`）
+1. **生成/获取文件** → 保存到本地（如 `/tmp/openclaw/`）
 2. **判断场景**：
-   - 如果是**私信** → 直接用 `feishu_im_user_message` 发送图片
-   - 如果是**群聊** → 先上传云空间，再发送链接文本
-3. **上传云空间** → 使用 `feishu_drive_file` 工具
-4. **发送消息** → 包含云空间链接的文本消息
+   - **群聊** → 上传云空间 + 发送链接文本
+   - **私信** → 直接发送图片/文件
+3. **发送消息** → **永远使用 `message` 工具（机器人身份）**
 
 ### 注意事项
+- ✅ **永远用机器人身份**发送消息（`message` 工具）
+- ❌ **禁止用用户身份**发送消息（`feishu_im_user_message` 工具）
 - ✅ 云空间上传的文件会自动出现在用户的"我的空间"
 - ✅ 链接格式：`https://xxx.feishu.cn/file/xxx`
-- ❌ 群聊中不能直接发送本地图片文件
 - ⚠️ 图片需要先移动到 `/tmp/openclaw/` 目录才能被某些工具访问
+- ⚠️ 用用户身份发送的消息需要用户手动撤销，会造成困扰
 
 ## Examples
 

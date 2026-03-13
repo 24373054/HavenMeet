@@ -9,14 +9,57 @@ Explore → Record → Replay → Fix. Convert expensive browser-tool interactio
 
 ## Prerequisites
 
-Install Playwright (once per machine):
+### 1. Install Playwright
 
 ```bash
 npm install -g playwright
 # or in workspace: npm init -y && npm install playwright
 ```
 
-No browser download needed — scripts connect to OpenClaw's existing Chrome via CDP.
+### 2. Chrome 浏览器（已预安装）
+
+**⚠️ 重要**: Chrome 浏览器已通过 MediaCrawler 安装，无需再次下载！
+
+**Chrome 路径**: `/home/Matrix/.cache/ms-playwright/chromium-1124/chrome-linux/chrome`
+
+**验证浏览器是否存在**:
+```bash
+ls -lh /home/Matrix/.cache/ms-playwright/chromium-1124/chrome-linux/chrome
+# 应该显示：-rwxr-xr-x 1 Matrix Matrix 385M ...
+```
+
+**测试浏览器**:
+```bash
+cd /home/Matrix/.openclaw/workspace
+node scripts/browser/test-with-installed-chrome.js
+```
+
+### 3. 使用方式
+
+**方式 A: 指定 Chrome 路径（推荐）**
+```javascript
+const { chromium } = require('playwright');
+
+const browser = await chromium.launch({
+  executablePath: '/home/Matrix/.cache/ms-playwright/chromium-1124/chrome-linux/chrome',
+  headless: true,
+  args: ['--no-sandbox', '--disable-setuid-sandbox']
+});
+```
+
+**方式 B: 使用 Playwright 默认浏览器**
+```javascript
+const browser = await chromium.launch({
+  headless: true,
+  args: ['--no-sandbox', '--disable-setuid-sandbox']
+});
+```
+
+**说明**:
+- ✅ 浏览器大小约 385MB
+- ✅ 支持 Headless 模式
+- ✅ 无需 root 权限
+- ✅ 已通过 MediaCrawler 安装
 
 ## Architecture
 

@@ -227,6 +227,50 @@ python3 generate_xhs_images.py
 
 ---
 
+## 🌐 浏览器自动化 (Browser Automation)
+
+### ⚠️ 重要：Chrome 浏览器已预安装
+
+**Chrome 路径**: `/home/Matrix/.cache/ms-playwright/chromium-1124/chrome-linux/chrome`
+
+**说明**:
+- ✅ 浏览器已通过 MediaCrawler 安装（Playwright 自动下载）
+- ✅ 无需再次下载，直接使用即可
+- ✅ 支持 Headless 模式（无头浏览器）
+- ✅ 大小约 385MB
+
+### 使用方式
+
+**方式 1: 使用 Playwright 脚本**
+```javascript
+const { chromium } = require('playwright');
+
+const browser = await chromium.launch({
+  executablePath: '/home/Matrix/.cache/ms-playwright/chromium-1124/chrome-linux/chrome',
+  headless: true,
+  args: ['--no-sandbox', '--disable-setuid-sandbox']
+});
+```
+
+**方式 2: 使用 browser-automation-ultra skill**
+```bash
+# 脚本会自动使用已安装的 Chrome
+node scripts/browser/your-script.js
+```
+
+### 测试浏览器
+```bash
+cd /home/Matrix/.openclaw/workspace
+node scripts/browser/test-with-installed-chrome.js
+```
+
+### 输出文件位置
+- 截图：`/tmp/openclaw/*.png`
+- PDF: `/tmp/openclaw/*.pdf`
+- HTML: `/tmp/openclaw/*.html`
+
+---
+
 ## 📦 Skillhub 技能商店
 
 **安装时间**: 2026-03-14  

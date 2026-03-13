@@ -209,27 +209,183 @@ python3 generate_xhs_images.py
 - ⚠️ **小红书限制**，只能获取 `desc` 字段，完整正文需点击链接查看
 - ⚠️ **知乎优势**，可以获取完整回答正文
 
-### 📚 完整文档
+### 📸 浏览器截图最佳实践 (2026-03-14 实战验证)
 
-详细使用指南：`/home/Matrix/.openclaw/workspace/skills/mediacrawler-search/SKILL.md`
+**问题**: 无头浏览器截图显示"页面不存在"（未登录状态）  
+**解决**: 使用已登录的用户数据目录进行截图
 
-### 🎯 实战案例
+#### ✅ 正确方式（使用已登录浏览器）
 
-**案例 1: OpenClaw 热度分析**
-- 爬取 40 篇小红书笔记 + 163 条知乎回答
-- 总互动量 152 万次
-- 生成分析报告 + 小红书推文
+```python
+from playwright.sync_api import sync_playwright
+import os
 
-**案例 2: 知识库构建**
-- 爬取多平台数据
-- 导入飞书知识空间
-- 结构化存储原始数据 + 分析报告 + 可视化图表
+os.makedirs('screenshots', exist_ok=True)
+
+with sync_playwright() as p:
+    # 关键：使用 launch_persistent_context + 已登录的用户数据目录
+    browser = p.chromium.launch_persistent_context(
+        user_data_dir='./browser_data/xhs_user_data_dir',  # 已登录的用户数据
+        executable_path='/home/Matrix/.cache/ms-playwright/chromium-1124/chrome-linux/chrome',
+        headless=True,
+        args=['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+        viewport={'width': 1080, 'height': 1920}  # 手机尺寸
+    )
+    
+    page = browser.pages[0] if browser.pages else browser.new_page()
+    
+    # 访问目标页面
+    page.goto('https://www.xiaohongshu.com/search_result?keyword=AI', wait_until='networkidle')
+    page.wait_for_timeout(4000)  # 等待内容加载
+    
+    # 截图 1: 首页
+    page.screenshot(path='screenshots/01_page.png', full_page=True)
+    
+    # 滚动并截图
+    for i, scroll_y in enumerate([500, 1000, 1500, 2000], start=2):
+        page.evaluate(f'window.scrollTo(0, {scroll_y})')
+        page.wait_for_timeout(1000)
+        page.screenshot(path=f'screenshots/0{i}_scroll_{scroll_y}.png', full_page=True)
+    
+    browser.close()
+```
+
+#### ❌ 错误方式（未登录浏览器）
+
+```python
+# 这样会导致截图显示"页面不存在"或登录页
+browser = p.chromium.launch(...)  # 没有用户数据目录
+page = browser.new_page()
+page.goto('https://www.xiaohongshu.com/...')  # 需要登录的页面无法访问
+```
+
+#### 🔑 关键配置
+
+| 参数 | 值 | 说明 |
+|------|------|------|
+| `user_data_dir` | `./browser_data/xhs_user_data_dir` | **必须**使用已登录的用户数据 |
+| `headless` | `True` | 无头模式 |
+| `viewport` | `{'width': 1080, 'height': 1920}` | 手机尺寸截图 |
+| `args` | `['--no-sandbox', ...]` | 服务器环境必需参数 |
+
+#### 📊 验证截图成功
+
+**成功标志**:
+- ✅ 图片大小 > 1MB（说明内容完整加载）
+- ✅ 可以看到真实的帖子内容
+- ✅ 图片清晰，无"页面不存在"提示
+
+**失败标志**:
+- ❌ 图片大小 < 50KB（空页面）
+- ❌ 显示登录页或"页面不存在"
+- ❌ 内容为空白或错误提示
+
+#### 📁 用户数据目录位置
+
+- **小红书**: `MediaCrawler-main/browser_data/xhs_user_data_dir`
+- **知乎**: `MediaCrawler-main/browser_data/zhihu_user_data_dir`
+
+**首次使用**: 需要先通过 MediaCrawler 扫码登录，生成用户数据目录。
+
+#### 🎯 完整工作流程
+
+```
+1. 确保已登录 → 检查 browser_data/{平台}_user_data_dir 是否存在
+   ↓
+2. 使用 launch_persistent_context → 加载已登录状态
+   ↓
+3. 访问目标页面 → 等待内容加载 (wait_for_timeout)
+   ↓
+4. 截图 → full_page=True 获取完整页面
+   ↓
+5. 验证截图 → 检查文件大小 (>1MB 为正常)
+```
 
 ---
 
-## 🌐 浏览器自动化 (Browser Automation)
+## 🌐 上网技能完整配置 (Internet Skills)
 
-### ⚠️ 重要：Chrome 浏览器已预安装
+### 📊 技能概览（2026-03-14 测试通过）
+
+| 技能 | 类型 | API Key | 状态 | 用途 |
+|------|------|---------|------|------|
+| **web_fetch** | 网页提取 | ❌ | ✅ | 快速获取网页内容 |
+| **browser-automation** | 浏览器自动化 | ❌ | ✅ | 复杂交互、登录 |
+| **mediacrawler** | 社交媒体爬虫 | ❌ | ✅ | 知乎/小红书数据 |
+| **browser-screenshot** | 浏览器截图 | ❌ | ✅ | 已登录状态截图（新增） |
+| web_search | API 搜索 | ✅ | ❌ | 通用搜索（需配置） |
+
+**完整文档**: `/home/Matrix/.openclaw/workspace/INTERNET_SKILLS.md`
+
+### 📋 四步递进法
+
+```
+Step 1: web_fetch (1-3 秒) → 快速概览
+  ↓
+Step 2: browser-automation (30-60 秒) → 深度访问
+  ↓
+Step 3: mediacrawler (60-180 秒) → 精准爬取
+  ↓
+Step 4: 综合分析 (1-5 分钟) → 生成报告
+```
+
+**总耗时**: 3-10 分钟  
+**适用场景**: 深度调研、多源数据验证、综合分析报告
+
+### 🔧 关键配置
+
+**浏览器路径**: `/home/Matrix/.cache/ms-playwright/chromium-1124/chrome-linux/chrome`  
+**启动参数**: `--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage`
+
+**MediaCrawler Cookie 登录** (推荐):
+```bash
+cd /home/Matrix/.openclaw/workspace/MediaCrawler-main
+python3 main.py \
+  --platform zhihu \
+  --lt cookie \
+  --type search \
+  --keywords "关键词" \
+  --get_comment yes \
+  --save_data_option jsonl \
+  --headless yes
+```
+
+**Cookie 位置**: `MediaCrawler-main/browser_data/zhihu_user_data_dir/Default/Cookies`
+
+### 📊 实战案例
+
+**北航软件工程课程项目调研** (2026-03-14):
+- ✅ web_fetch: 1.36 秒获取 2640 字
+- ✅ browser-automation: 修复启动问题，生成截图
+- ✅ mediacrawler: Cookie 登录成功，爬取 69 内容 +248 评论
+- ✅ 生成终极报告 (8.6 KB) + 原始数据 (508 KB)
+
+**小红书 AI 帖子截图** (2026-03-14):
+- ✅ 使用已登录浏览器截图（launch_persistent_context）
+- ✅ 5 张完整截图（1MB+，内容完整）
+- ✅ 上传飞书云空间并分享链接
+- ✅ 写入 TOOLS.md 配置文档
+
+**完整流程文档**: `/home/Matrix/.openclaw/workspace/RESEARCH-SOP.md`
+
+---
+
+## 🌐 上网技能完整配置 (Internet Skills)
+
+### 📊 技能概览（2026-03-14 测试通过）
+
+| 技能 | 类型 | API Key | 状态 | 用途 |
+|------|------|---------|------|------|
+| **web_fetch** | 网页提取 | ❌ | ✅ | 快速获取网页内容 |
+| **browser-automation** | 浏览器自动化 | ❌ | ✅ | 复杂交互、登录 |
+| **mediacrawler** | 社交媒体爬虫 | ❌ | ✅ | 知乎/小红书数据 |
+| web_search | API 搜索 | ✅ | ❌ | 通用搜索（需配置） |
+
+**完整文档**: `/home/Matrix/.openclaw/workspace/INTERNET_SKILLS.md`
+
+---
+
+### 1️⃣ Chrome 浏览器（已预安装）
 
 **Chrome 路径**: `/home/Matrix/.cache/ms-playwright/chromium-1124/chrome-linux/chrome`
 
@@ -239,35 +395,84 @@ python3 generate_xhs_images.py
 - ✅ 支持 Headless 模式（无头浏览器）
 - ✅ 大小约 385MB
 
-### 使用方式
-
-**方式 1: 使用 Playwright 脚本**
-```javascript
-const { chromium } = require('playwright');
-
-const browser = await chromium.launch({
-  executablePath: '/home/Matrix/.cache/ms-playwright/chromium-1124/chrome-linux/chrome',
-  headless: true,
-  args: ['--no-sandbox', '--disable-setuid-sandbox']
-});
-```
-
-**方式 2: 使用 browser-automation-ultra skill**
+**验证浏览器**:
 ```bash
-# 脚本会自动使用已安装的 Chrome
-node scripts/browser/your-script.js
+ls -lh /home/Matrix/.cache/ms-playwright/chromium-1124/chrome-linux/chrome
+# 输出：-rwxr-xr-x 1 Matrix Matrix 385M ...
 ```
 
-### 测试浏览器
+**测试浏览器**:
+```bash
+cd /home/Matrix/.openclaw/workspace/MediaCrawler-main
+python3 << 'EOF'
+from playwright.sync_api import sync_playwright
+
+with sync_playwright() as p:
+    browser = p.chromium.launch(
+        executable_path='/home/Matrix/.cache/ms-playwright/chromium-1124/chrome-linux/chrome',
+        headless=True,
+        args=['--no-sandbox', '--disable-setuid-sandbox']
+    )
+    page = browser.new_page()
+    page.goto('https://www.baidu.com')
+    print(f"✅ 测试成功：{page.title()}")
+    browser.close()
+EOF
+```
+
+---
+
+### 2️⃣ web_fetch - 轻量级网页提取
+
+**使用场景**: 快速获取静态网页内容（无需 JavaScript 渲染）
+
+**示例**:
+```javascript
+web_fetch:
+  url: "https://example.com"
+  extractMode: "markdown"
+  maxChars: 5000
+```
+
+**✅ 已测试**: 成功访问百度（372ms）
+
+---
+
+### 3️⃣ browser-automation - 浏览器自动化
+
+**使用场景**: 需要登录、交互、JavaScript 渲染的网站
+
+**Python 示例**:
+```python
+from playwright.sync_api import sync_playwright
+
+with sync_playwright() as p:
+    browser = p.chromium.launch(
+        executable_path='/home/Matrix/.cache/ms-playwright/chromium-1124/chrome-linux/chrome',
+        headless=True,
+        args=['--no-sandbox', '--disable-setuid-sandbox']
+    )
+    page = browser.new_page()
+    page.goto('https://www.zhihu.com')
+    # 执行操作...
+    browser.close()
+```
+
+**✅ 已测试**: 成功访问知乎
+
+**文档**: `/home/Matrix/.openclaw/workspace/skills/browser-automation-ultra/SKILL.md`
+
+---
+
+### 4️⃣ 测试脚本
+
+**运行完整测试**:
 ```bash
 cd /home/Matrix/.openclaw/workspace
-node scripts/browser/test-with-installed-chrome.js
+./scripts/test-internet-skills.sh
 ```
 
-### 输出文件位置
-- 截图：`/tmp/openclaw/*.png`
-- PDF: `/tmp/openclaw/*.pdf`
-- HTML: `/tmp/openclaw/*.html`
+**测试文件**: `/home/Matrix/.openclaw/workspace/scripts/test-internet-skills.sh`
 
 ---
 

@@ -62,6 +62,248 @@ python3 scripts/flux2_generate.py \
   --width 1024 --height 1024
 ```
 
+## 📊 社交媒体爬虫与分析 (MediaCrawler)
+
+**项目路径**: `/home/Matrix/.openclaw/workspace/MediaCrawler-main`  
+**Skill 文档**: `/home/Matrix/.openclaw/workspace/skills/mediacrawler-search/SKILL.md`
+
+### 🎯 何时使用此能力
+
+**当用户需要以下能力时，立即调用 MediaCrawler：**
+
+1. **舆情监控** - "帮我看看网上对 XX 的评价"、"了解 XX 话题的舆论"
+2. **资讯收集** - "爬取小红书/知乎上关于 XX 的讨论"、"收集行业趋势数据"
+3. **竞品分析** - "分析竞品在社交媒体上的表现"、"看看用户反馈"
+4. **市场调研** - "了解目标用户群体的偏好"、"收集用户关注点"
+5. **内容创作** - "帮我写小红书推文"、"基于数据创作内容"
+6. **学术研究** - "爬取学术讨论"、"分析研究热点"
+
+### 核心能力
+- ✅ **数据爬取** - 小红书、知乎、抖音、B 站等多平台
+- ✅ **数据分析** - 互动量统计、内容分类、趋势分析、可视化
+- ✅ **报告生成** - Markdown 报告、飞书文档上传
+- ✅ **内容创作** - 基于数据分析创作推文 + Flux.2 配图
+
+### 🚀 快速使用
+
+#### 场景 1: 爬取小红书数据（扫码登录）
+```bash
+cd /home/Matrix/.openclaw/workspace/MediaCrawler-main
+
+# 方式 A: 扫码登录（推荐）
+python3 main.py \
+  --platform xhs \
+  --lt qrcode \
+  --type search \
+  --keywords "OpenClaw" \
+  --get_comment yes \
+  --save_data_option jsonl \
+  --headless yes
+
+# 方式 B: Cookie 登录（需要预先获取）
+python3 main.py \
+  --platform xhs \
+  --lt cookie \
+  --type search \
+  --keywords "OpenClaw"
+```
+
+#### 场景 2: 爬取知乎数据（扫码登录）
+```bash
+cd /home/Matrix/.openclaw/workspace/MediaCrawler-main
+
+python3 main.py \
+  --platform zhihu \
+  --lt qrcode \
+  --type search \
+  --keywords "OpenClaw" \
+  --get_comment yes \
+  --save_data_option jsonl \
+  --headless yes
+```
+
+#### 场景 3: 生成分析报告
+```bash
+cd /home/Matrix/.openclaw/workspace/MediaCrawler-main
+
+# 小红书报告
+python3 generate_openclaw_report.py \
+  --platform xhs \
+  --contents-file data/xhs/jsonl/search_contents_2026-03-13.jsonl \
+  --comments-file data/xhs/jsonl/search_comments_2026-03-13.jsonl \
+  --output openclaw_xhs_report.md
+
+# 知乎报告
+python3 generate_openclaw_report.py \
+  --platform zhihu \
+  --contents-file data/zhihu/jsonl/search_contents_2026-03-13.jsonl \
+  --comments-file data/zhihu/jsonl/search_comments_2026-03-13.jsonl \
+  --output openclaw_zhihu_report.md
+```
+
+#### 场景 4: 生成配图（Flux.2）
+```bash
+cd /home/Matrix/.openclaw/workspace/MediaCrawler-main
+python3 generate_xhs_images.py
+```
+
+### 📱 扫码登录详细流程
+
+**小红书扫码**:
+1. 运行程序 → 自动生成二维码图片
+2. 上传二维码到飞书云盘 → 获取链接
+3. 发送链接到群聊 → 用户扫码
+4. 用户用手机小红书 App 扫码 → 程序自动开始爬取
+
+**知乎扫码**:
+1. 运行程序 → 生成二维码
+2. 上传到云盘并发送链接
+3. 用户用知乎 App 扫码
+4. 扫码后自动爬取
+
+**注意事项**:
+- ⏱️ 二维码有效期约 120 秒
+- 📱 需要手机 App 扫码
+- 🔄 扫码失败需重新生成
+- ⚡ 扫码后程序自动开始爬取
+
+### 📊 完整工作流程
+
+```
+1. 爬取数据 → MediaCrawler 搜索关键词
+   ↓
+2. 数据保存 → JSONL 格式（笔记 + 评论）
+   ↓
+3. 生成报告 → analyze 脚本生成 Markdown 报告
+   ↓
+4. 上传文档 → 飞书文档分享
+   ↓
+5. 创作推文 → 基于数据创作 + Flux.2 配图
+   ↓
+6. 发布内容 → 手动发布到小红书/知乎
+```
+
+### 📁 输出文件
+
+- `data/xhs/jsonl/search_contents_YYYY-MM-DD.jsonl` - 小红书笔记数据
+- `data/xhs/jsonl/search_comments_YYYY-MM-DD.jsonl` - 小红书评论数据
+- `data/zhihu/jsonl/search_contents_YYYY-MM-DD.jsonl` - 知乎回答数据
+- `data/zhihu/jsonl/search_comments_YYYY-MM-DD.jsonl` - 知乎评论数据
+- `openclaw_xhs_report.md` - 分析报告
+
+### 🛠️ 相关脚本
+
+| 脚本 | 功能 | 路径 |
+|------|------|------|
+| `main.py` | 主爬虫程序 | `/workspace/MediaCrawler-main/main.py` |
+| `generate_openclaw_report.py` | 报告生成 | `/workspace/MediaCrawler-main/generate_openclaw_report.py` |
+| `generate_xhs_images.py` | 配图生成 | `/workspace/MediaCrawler-main/generate_xhs_images.py` |
+| `generate_full_docs.py` | 完整文档生成 | `/workspace/MediaCrawler-main/generate_full_docs.py` |
+
+### ⚠️ 注意事项
+
+- ⚠️ **仅供学习研究**，请勿用于商业用途
+- ⚠️ **需要扫码登录**，首次运行需手机 APP 扫码
+- ⚠️ **控制爬取频率**，避免对平台造成干扰
+- ⚠️ **XHS 图片截断**，图片 URL 可能被截断为 `htt`
+- ⚠️ **小红书限制**，只能获取 `desc` 字段，完整正文需点击链接查看
+- ⚠️ **知乎优势**，可以获取完整回答正文
+
+### 📚 完整文档
+
+详细使用指南：`/home/Matrix/.openclaw/workspace/skills/mediacrawler-search/SKILL.md`
+
+### 🎯 实战案例
+
+**案例 1: OpenClaw 热度分析**
+- 爬取 40 篇小红书笔记 + 163 条知乎回答
+- 总互动量 152 万次
+- 生成分析报告 + 小红书推文
+
+**案例 2: 知识库构建**
+- 爬取多平台数据
+- 导入飞书知识空间
+- 结构化存储原始数据 + 分析报告 + 可视化图表
+
+---
+
+## 📦 Skillhub 技能商店
+
+**安装时间**: 2026-03-14  
+**安装源**: 腾讯镜像 `https://skillhub-1388575217.cos.ap-guangzhou.myqcloud.com`  
+**CLI 路径**: `/home/Matrix/.local/bin/skillhub`  
+**Skills 目录**: `/home/Matrix/.openclaw/workspace/skills/`
+
+### 🎯 已安装技能（13 个）
+
+#### 文件管理类
+- ✅ **filesystem-1-0-0** - 高级文件系统操作
+- ✅ **file-converter** - 文件格式转换（JSON/YAML/CSV/Markdown）
+- ✅ **file-sorter** - 智能文件分类
+
+#### 日程日历类
+- ✅ **calendar-manager** - 日历管理（创建/读取/提醒）
+- ✅ **lunar-calendar** - 中国农历查询（公历/农历转换、黄历、节气）
+
+#### 浏览器自动化
+- ✅ **browser-automation-ultra** - 零 token 浏览器自动化
+
+#### 代码分析类
+- ✅ **code-project-analyzer** - 项目结构自动分析
+- ✅ **code-review-sr** - AI 代码审查
+
+#### 日常助手
+- ✅ **briefing** - 每日简报（日历 + 待办 + 天气）
+
+#### Skillhub 工具
+- ✅ **find-skills** - 技能搜索
+- ✅ **skillhub-preference** - 偏好配置
+
+#### 自定义技能
+- ✅ **flux2-image-gen** - Flux.2 图像生成
+- ✅ **mediacrawler-search** - 社交媒体爬虫
+
+### 🚀 快速使用
+
+#### 搜索技能
+```bash
+skillhub search <关键词>
+# 示例：skillhub search calendar
+```
+
+#### 安装技能
+```bash
+skillhub install <技能名>
+# 示例：skillhub install filesystem-1-0-0
+```
+
+#### 查看已安装技能
+```bash
+ls -la /home/Matrix/.openclaw/workspace/skills/
+```
+
+### 📊 技能使用场景
+
+| 需求 | 推荐技能 |
+|------|---------|
+| 批量文件操作 | `filesystem-1-0-0` |
+| 格式转换 | `file-converter` |
+| 文件整理 | `file-sorter` |
+| 日程管理 | `calendar-manager` |
+| 农历查询 | `lunar-calendar` |
+| 网页自动化 | `browser-automation-ultra` |
+| 项目分析 | `code-project-analyzer` |
+| 代码审查 | `code-review-sr` |
+| 每日简报 | `briefing` |
+| 社交媒体爬取 | `mediacrawler-search` |
+| 图像生成 | `flux2-image-gen` |
+
+### 📄 详细文档
+
+完整技能列表和使用指南：`/home/Matrix/.openclaw/workspace/SKILLHUB.md`
+
+---
+
 ## 📸 飞书消息发送 (Feishu Message Sending)
 
 ### ⚠️ 重要原则

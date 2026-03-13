@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "skills": {
+    "filesystem-1-0-0": {
+      "name": "Filesystem 1.0.0",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=filesystem-1-0-0",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "file-converter": {
+      "name": "file-converter",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=file-converter",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "briefing": {
+      "name": "Briefing (Calendar Agenda, Weather, Pending To-Dos)",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=briefing",
+      "source": "skillhub",
+      "version": "2.1.0"
+    },
+    "lunar-calendar": {
+      "name": "Lunar Calendar",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=lunar-calendar",
+      "source": "skillhub",
+      "version": "0.9.0"
+    },
+    "calendar-manager": {
+      "name": "Calendar Manager",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=calendar-manager",
+      "source": "skillhub",
+      "version": "1.1.0"
+    },
+    "browser-automation-ultra": {
+      "name": "Browser Automation Ultra",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=browser-automation-ultra",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "code-project-analyzer": {
+      "name": "Code Project Auto Analyzer",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=code-project-analyzer",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "code-review-sr": {
+      "name": "Code Review",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=code-review-sr",
+      "source": "skillhub",
+      "version": "1.0.4"
+    },
+    "file-sorter": {
+      "name": "File Sorter",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=file-sorter",
+      "source": "skillhub",
+      "version": "1.0.0"
+    }
+  }
+}

@@ -26,8 +26,16 @@ def get_api_url(provided_url: str | None) -> str:
     return os.environ.get("FLUX2_API_URL", "https://ptp.matrixlabs.cn")
 
 
+def get_api_key(provided_key: str | None) -> str | None:
+    """Get API key from argument or environment."""
+    if provided_key:
+        return provided_key
+    return os.environ.get("FLUX2_API_KEY", "ptp2025")  # Default beta code
+
+
 def edit_image(
     api_url: str,
+    api_key: str | None,
     input_path: Path,
     prompt: str,
     output_path: Path,
@@ -53,12 +61,19 @@ def edit_image(
             }
             data = {
                 "prompt": prompt,
+                "accessCode": api_key if api_key else "ptp2025",
             }
+            
+            # Build headers with API key if provided
+            headers = {}
+            if api_key:
+                headers["Authorization"] = f"Bearer {api_key}"
             
             response = requests.post(
                 endpoint,
                 files=files,
                 data=data,
+                headers=headers,
                 timeout=300,  # 5 minutes timeout
             )
             response.raise_for_status()
@@ -119,11 +134,16 @@ def main():
         "--api-url", "-u",
         help="Flux2 API URL (overrides FLUX2_API_URL env var)"
     )
+    parser.add_argument(
+        "--api-key", "-k",
+        help="Flux2 API key/beta code (overrides FLUX2_API_KEY env var, default: ptp2025)"
+    )
 
     args = parser.parse_args()
 
-    # Get API URL
+    # Get API URL and key
     api_url = get_api_url(args.api_url)
+    api_key = get_api_key(args.api_key)
     
     # Set up paths
     input_path = Path(args.input_image)
@@ -132,6 +152,7 @@ def main():
     # Edit image
     result = edit_image(
         api_url=api_url,
+        api_key=api_key,
         input_path=input_path,
         prompt=args.prompt,
         output_path=output_path,

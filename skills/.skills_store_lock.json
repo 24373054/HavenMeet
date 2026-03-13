@@ -54,6 +54,114 @@
       "zip_url": "https://lightmake.site/api/v1/download?slug=file-sorter",
       "source": "skillhub",
       "version": "1.0.0"
+    },
+    "skill-vetter": {
+      "name": "Skill Vetter",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=skill-vetter",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "agent-browser": {
+      "name": "Agent Browser",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=agent-browser",
+      "source": "skillhub",
+      "version": "0.2.0"
+    },
+    "larry": {
+      "name": "Larry",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=larry",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "self-improving-agent": {
+      "name": "self-improving-agent",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=self-improving-agent",
+      "source": "skillhub",
+      "version": "1.0.11"
+    },
+    "proactive-agent": {
+      "name": "Proactive Agent",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=proactive-agent",
+      "source": "skillhub",
+      "version": "3.1.0"
+    },
+    "humanizer": {
+      "name": "Humanizer",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=humanizer",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "free-ride": {
+      "name": "Free Ride - Unlimited free AI",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=free-ride",
+      "source": "skillhub",
+      "version": "1.0.4"
+    },
+    "byterover": {
+      "name": "ByteRover",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=byterover",
+      "source": "skillhub",
+      "version": "1.2.2"
+    },
+    "auto-updater": {
+      "name": "Auto-Updater Skill",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=auto-updater",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "clawddocs": {
+      "name": "Clawdbot Documentation Expert",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=clawddocs",
+      "source": "skillhub",
+      "version": "1.2.2"
+    },
+    "stock-analysis": {
+      "name": "Stock Analysis",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=stock-analysis",
+      "source": "skillhub",
+      "version": "6.2.0"
+    },
+    "frontend-design": {
+      "name": "Frontend Design",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=frontend-design",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "elite-longterm-memory": {
+      "name": "Elite Longterm Memory",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=elite-longterm-memory",
+      "source": "skillhub",
+      "version": "1.2.3"
+    },
+    "automation-workflows": {
+      "name": "Automation Workflows",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=automation-workflows",
+      "source": "skillhub",
+      "version": "0.1.0"
+    },
+    "moltguard": {
+      "name": "MoltGuard - OpenClaw Security Plugin by OpenGuardrails",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=moltguard",
+      "source": "skillhub",
+      "version": "6.6.17"
+    },
+    "openclaw-github-assistant": {
+      "name": "OpenClaw GitHub Assistant",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=openclaw-github-assistant",
+      "source": "skillhub",
+      "version": "2.0.1"
+    },
+    "memory-manager": {
+      "name": "Memory Manager",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=memory-manager",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "humanizer-zh": {
+      "name": "humanizer-zh",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=humanizer-zh",
+      "source": "skillhub",
+      "version": "1.0.0"
     }
   }
 }

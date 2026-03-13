@@ -1,37 +1,147 @@
 # Skillhub 技能商店
 
-## 📦 已安装的技能列表
-
-### 1️⃣ 文件管理类
-- **filesystem-1-0-0** - 高级文件系统操作（递归搜索、批量复制/移动/删除、目录分析）
-- **file-converter** - 文件格式转换（JSON/YAML/XML/CSV/Markdown 互转）
-- **file-sorter** - 智能文件分类（按类型/大小/日期/关键词）
-
-### 2️⃣ 日程与日历类
-- **calendar-manager** - 日历管理（读取日程、创建事件、设置提醒）
-- **lunar-calendar** - 中国农历查询（公历/农历转换、黄历宜忌、24 节气）
-
-### 3️⃣ 浏览器自动化类
-- **browser-automation-ultra** - 零 token 浏览器自动化（Playwright + CDP 锁管理）
-
-### 4️⃣ 代码分析类
-- **code-project-analyzer** - 代码项目自动分析（结构识别、技术栈检测、自动生成文档）
-- **code-review-sr** - AI 代码审查（bug 检测、安全漏洞、性能问题）
-
-### 5️⃣ 日常助手类
-- **briefing** - 每日简报（日历、待办、天气汇总）
-
-### 6️⃣ Skillhub 相关
-- **find-skills** - 查找技能（Skillhub 搜索功能）
-- **skillhub-preference** - Skillhub 偏好配置
-
-### 7️⃣ 自定义技能
-- **flux2-image-gen** - Flux.2 图像生成
-- **mediacrawler-search** - 社交媒体爬虫与分析（小红书/知乎）
+**安装时间**: 2026-03-14  
+**安装源**: 腾讯镜像 `https://skillhub-1388575217.cos.ap-guangzhou.myqcloud.com`  
+**CLI 路径**: `/home/Matrix/.local/bin/skillhub`  
+**Skills 目录**: `/home/Matrix/.openclaw/workspace/skills/`
 
 ---
 
-## 🔧 Skillhub 使用指南
+## 📊 已安装技能（75 个）
+
+### ✅ 本次新安装（18 个）
+- ✅ **skill-vetter** - 技能验证工具
+- ✅ **agent-browser** - 浏览器自动化代理
+- ✅ **larry** - Larry 代理技能
+- ✅ **self-improving-agent** - 自改进代理
+- ✅ **proactive-agent** - 主动代理
+- ✅ **humanizer** - 人性化回复（英文）
+- ✅ **humanizer-zh** - 人性化回复（中文）
+- ✅ **free-ride** - Free Ride 技能
+- ✅ **byterover** - ByteRover 技能
+- ✅ **auto-updater** - 自动更新
+- ✅ **clawddocs** - OpenClaw 文档工具
+- ✅ **stock-analysis** - 股票分析
+- ✅ **frontend-design** - 前端设计
+- ✅ **elite-longterm-memory** - 高级长期记忆
+- ✅ **automation-workflows** - 自动化工作流
+- ✅ **moltguard** - Moltguard 安全工具
+- ✅ **openclaw-github-assistant** - OpenClaw GitHub 助手
+- ✅ **memory-manager** - 记忆管理
+
+### ❌ 安装失败（1 个）
+- ❌ **polymarketodds** - 下载失败（404 错误，可能已下架）
+
+### 📁 之前已安装（56 个）
+
+#### 文件管理类
+- ✅ **filesystem-1-0-0** - 高级文件系统操作
+- ✅ **file-converter** - 文件格式转换
+- ✅ **file-sorter** - 智能文件分类
+
+#### 日程日历类
+- ✅ **calendar-manager** - 日历管理
+- ✅ **lunar-calendar** - 中国农历查询
+
+#### 浏览器自动化
+- ✅ **browser-automation-ultra** - 零 token 浏览器自动化
+- ✅ **agent-browser** - 浏览器代理（新增）
+
+#### 代码分析类
+- ✅ **code-project-analyzer** - 项目结构分析
+- ✅ **code-review-sr** - AI 代码审查
+- ✅ **coding-agent** - 编码代理
+
+#### 日常助手
+- ✅ **briefing** - 每日简报
+- ✅ **weather** - 天气查询
+- ✅ **summarize** - 内容摘要
+- ✅ **nano-pdf** - PDF 处理
+
+#### 笔记与知识管理
+- ✅ **1password** - 密码管理
+- ✅ **apple-notes** - Apple 备忘录
+- ✅ **apple-reminders** - Apple 提醒事项
+- ✅ **bear-notes** - Bear 笔记
+- ✅ **notion** - Notion 集成
+- ✅ **obsidian** - Obsidian 集成
+- ✅ **things-mac** - Things 3 集成
+- ✅ **elite-longterm-memory** - 高级长期记忆（新增）
+- ✅ **memory-manager** - 记忆管理（新增）
+
+#### 社交媒体与通信
+- ✅ **discord** - Discord 集成
+- ✅ **slack** - Slack 集成
+- ✅ **wacli** - WhatsApp CLI
+- ✅ **bluebubbles** - BlueBubbles 集成
+- ✅ **imsg** - iMessage 集成
+
+#### 媒体处理
+- ✅ **openai-whisper** - 语音转文字
+- ✅ **openai-whisper-api** - Whisper API
+- ✅ **openai-image-gen** - AI 图像生成
+- ✅ **flux2-image-gen** - Flux.2 图像生成
+- ✅ **sherpa-onnx-tts** - 语音合成
+- ✅ **voice-call** - 语音通话
+- ✅ **video-frames** - 视频帧提取
+- ✅ **gifgrep** - GIF 搜索
+
+#### 音乐与音频
+- ✅ **songsee** - 音乐识别
+- ✅ **sonoscli** - Sonos 控制
+- ✅ **spotify-player** - Spotify 播放
+
+#### 工具与实用程序
+- ✅ **gh-issues** - GitHub Issues
+- ✅ **github** - GitHub 集成
+- ✅ **trello** - Trello 集成
+- ✅ **xurl** - URL 缩短
+- ✅ **peekaboo** - Peekaboo 工具
+- ✅ **goplaces** - GoPlaces 工具
+- ✅ **gog** - GoG 工具
+- ✅ **oracle** - Oracle 工具
+- ✅ **ordercli** - Order CLI
+- ✅ **eightctl** - Eightctl 工具
+- ✅ **blucli** - BluCLI 工具
+- ✅ **camsnap** - 摄像头快照
+- ✅ **openhue** - Philips Hue 控制
+- ✅ **sag** - ElevenLabs TTS
+- ✅ **tmux** - Tmux 控制
+- ✅ **canvas** - Canvas 画布
+- ✅ **healthcheck** - 安全检查
+- ✅ **model-usage** - 模型使用统计
+- ✅ **session-logs** - 会话日志
+- ✅ **nano-banana-pro** - Nano Banana Pro
+- ✅ **blogwatcher** - 博客监控
+
+#### 新增高级技能
+- ✅ **skill-vetter** - 技能验证
+- ✅ **larry** - Larry 代理
+- ✅ **self-improving-agent** - 自改进代理
+- ✅ **proactive-agent** - 主动代理
+- ✅ **humanizer** - 人性化回复（英文）
+- ✅ **humanizer-zh** - 人性化回复（中文）
+- ✅ **free-ride** - Free Ride
+- ✅ **byterover** - ByteRover
+- ✅ **auto-updater** - 自动更新
+- ✅ **clawddocs** - OpenClaw 文档
+- ✅ **stock-analysis** - 股票分析
+- ✅ **frontend-design** - 前端设计
+- ✅ **automation-workflows** - 自动化工作流
+- ✅ **moltguard** - 安全工具
+- ✅ **openclaw-github-assistant** - GitHub 助手
+- ✅ **himalaya** - Himalaya 技能
+- ✅ **video-frames** - 视频帧提取
+- ✅ **ui-ux-pro-max** - UI/UX 设计（已存在）
+- ✅ **mediacrawler-search** - 社交媒体爬虫
+- ✅ **skill-creator** - 技能创建
+- ✅ **skillhub-preference** - Skillhub 偏好
+- ✅ **find-skills** - 技能搜索
+- ✅ **clawhub** - ClawHub CLI
+
+---
+
+## 🚀 快速使用
 
 ### 搜索技能
 ```bash
@@ -47,66 +157,62 @@ skillhub install <技能名>
 
 ### 查看已安装技能
 ```bash
-ls -la /home/Matrix/.openclaw/workspace/skills/
+ls -1 /home/Matrix/.openclaw/workspace/skills/
 ```
 
-### 卸载技能
+### 更新技能
 ```bash
-# 直接删除技能目录
+skillhub upgrade <技能名>
+# 或更新所有：skillhub upgrade --all
+```
+
+---
+
+## 📊 统计信息
+
+- **总技能数**: 75 个
+- **本次新增**: 18 个
+- **安装失败**: 1 个 (polymarketodds)
+- **上次更新**: 2026-03-14 00:53
+
+---
+
+## 📝 使用场景推荐
+
+| 需求 | 推荐技能 |
+|------|---------|
+| 批量文件操作 | `filesystem-1-0-0`, `file-sorter` |
+| 格式转换 | `file-converter`, `nano-pdf` |
+| 日程管理 | `calendar-manager`, `lunar-calendar` |
+| 农历查询 | `lunar-calendar` |
+| 网页自动化 | `browser-automation-ultra`, `agent-browser` |
+| 项目分析 | `code-project-analyzer` |
+| 代码审查 | `code-review-sr`, `coding-agent` |
+| 每日简报 | `briefing` |
+| 语音转文字 | `openai-whisper` |
+| 图像生成 | `flux2-image-gen`, `openai-image-gen` |
+| 社交媒体爬取 | `mediacrawler-search` |
+| 股票分析 | `stock-analysis` |
+| 记忆管理 | `memory-manager`, `elite-longterm-memory` |
+| 人性化回复 | `humanizer`, `humanizer-zh` |
+| 自动化工作流 | `automation-workflows` |
+| 安全检查 | `healthcheck`, `moltguard` |
+
+---
+
+## 🔧 维护
+
+### 清理未使用的技能
+```bash
+# 手动删除不需要的技能
 rm -rf /home/Matrix/.openclaw/workspace/skills/<技能名>
 ```
 
----
-
-## 📊 技能分类汇总
-
-| 类别 | 技能数量 | 主要功能 |
-|------|---------|---------|
-| 文件管理 | 3 | 文件系统操作、格式转换、文件分类 |
-| 日程日历 | 2 | 日程管理、农历查询 |
-| 浏览器 | 1 | 浏览器自动化 |
-| 代码分析 | 2 | 项目分析、代码审查 |
-| 日常助手 | 1 | 每日简报 |
-| Skillhub | 2 | 技能查找、配置 |
-| 自定义 | 2 | 图像生成、社交媒体爬取 |
-
-**总计**: 13 个技能
+### 备份技能列表
+```bash
+ls /home/Matrix/.openclaw/workspace/skills/ > ~/skills-backup.txt
+```
 
 ---
 
-## 🚀 常用场景
-
-### 文件管理
-- 需要批量处理文件 → `filesystem-1-0-0`
-- 需要转换文件格式 → `file-converter`
-- 需要整理文件 → `file-sorter`
-
-### 日程管理
-- 查看/创建日程 → `calendar-manager`
-- 查询农历/节气 → `lunar-calendar`
-
-### 代码开发
-- 分析项目结构 → `code-project-analyzer`
-- 代码审查 → `code-review-sr`
-
-### 浏览器自动化
-- 自动化网页操作 → `browser-automation-ultra`
-
-### 日常使用
-- 获取每日简报 → `briefing`
-
----
-
-## 📝 更新日志
-
-- **2026-03-14**: 初始安装 Skillhub，安装 10 个常用技能
-- **安装源**: 腾讯镜像 `https://skillhub-1388575217.cos.ap-guangzhou.myqcloud.com`
-
----
-
-## 🔗 相关链接
-
-- **Skillhub 官网**: https://skillhub.com
-- **腾讯镜像**: https://skillhub-1388575217.cos.ap-guangzhou.myqcloud.com
-- **CLI 路径**: `/home/Matrix/.local/bin/skillhub`
-- **Skills 目录**: `/home/Matrix/.openclaw/workspace/skills/`
+**最后更新**: 2026-03-14 00:53 GMT+8

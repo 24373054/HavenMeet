@@ -1,5 +1,43 @@
-# HEARTBEAT.md
+# HEARTBEAT.md - 自动检查任务
 
-# Keep this file empty (or with only comments) to skip heartbeat API calls.
+## 🧠 记忆管理（每次心跳必检）
 
-# Add tasks below when you want the agent to check something periodically.
+```bash
+# 检查记忆文件大小
+scripts/memory-auto-check.sh
+```
+
+**检查项**:
+- ✅ MEMORY.md 是否超过 50KB → 自动创建快照
+- ✅ 今日记忆文件是否存在
+- ✅ 语义记忆是否更新
+- ✅ 会话历史是否保存
+
+## 📊 定期检查（每天 2-4 次）
+
+### 1. 邮件检查
+- 查看是否有重要未读邮件
+- 记录到 `memory/YYYY-MM-DD.md`
+
+### 2. 日历检查
+- 查看未来 24 小时内的日程
+- 提前 2 小时提醒
+
+### 3. 天气检查
+- 如果用户可能外出，检查天气
+
+### 4. 记忆整理
+- 运行 `skills/memory-manager/organize.sh`
+- 将重要信息从每日文件迁移到 MEMORY.md
+- 更新语义记忆
+
+## ⚠️ 紧急检查（立即执行）
+
+当检测到以下情况时：
+- MEMORY.md > 100KB → 立即压缩并创建快照
+- 会话长度 > 80% → 提前保存上下文
+- 用户提到"记住" → 立即写入记忆文件
+
+---
+
+**最后更新**: 2026-03-14 01:02

@@ -1,7 +1,7 @@
 {
   "initialized": true,
   "version": "1.0.0",
-  "last_check": null,
+  "last_check": "2026-03-13T19:32:49Z",
   "last_snapshot": null,
   "last_organize": null,
   "warnings": 0,
@@ -10,5 +10,8 @@
     "semantic_count": 0,
     "procedural_count": 0,
     "snapshots_count": 0
-  }
+  },
+  "context_usage": 0,
+  "last_summary": "2026-03-13T17:36:37.375Z",
+  "summary_count": 1
 }

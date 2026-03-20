@@ -5,6 +5,9 @@
 ```bash
 # 检查记忆文件大小
 scripts/memory-auto-check.sh
+
+# 检查上下文窗口使用率
+bash skills/memory-manager/context-monitor.sh
 ```
 
 **检查项**:
@@ -12,6 +15,12 @@ scripts/memory-auto-check.sh
 - ✅ 今日记忆文件是否存在
 - ✅ 语义记忆是否更新
 - ✅ 会话历史是否保存
+- ✅ **上下文使用率** → 超过 80% 自动总结
+
+**自动刷新流程**:
+```
+上下文 > 80% → 触发 summarize.sh → 保存摘要 → 建议 /new 刷新
+```
 
 ## 📊 定期检查（每天 2-4 次）
 

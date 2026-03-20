@@ -108,6 +108,80 @@ Migrates flat `memory/*.md` files into proper structure:
 **`search.sh <type> <query>`** - Search by memory type
 **`stats.sh`** - Usage statistics
 
+### Context Window Management (NEW!)
+
+**`context-monitor.sh`** - Monitor session context usage
+```bash
+# Check current context window usage
+~/.openclaw/skills/memory-manager/context-monitor.sh
+
+# Output example:
+# 🧠 Context Monitor - Session Status
+# Current context usage: 45%
+# ✅ Safe: 45% context usage
+```
+
+**Thresholds:**
+- 70%: ⚠️ CAUTION - approaching limit
+- 80%: ⚠️ WARNING - auto-summary triggered
+- 85%: 🚨 CRITICAL - immediate action required
+
+**`summarize.sh`** - Basic session summarization
+```bash
+# Generate summary of current session
+~/.openclaw/skills/memory-manager/summarize.sh
+```
+
+**`summarize-advanced.sh`** - Advanced 4-step summarization
+```bash
+# Generate structured summary with AI assistance
+~/.openclaw/skills/memory-manager/summarize-advanced.sh
+
+# Steps:
+# 1. Fetch session history
+# 2. Extract conversation content
+# 3. Generate AI summary
+# 4. Save to episodic memory
+```
+
+**`summarize-ai.js`** - AI-powered summarization (Node.js)
+```bash
+# Generate intelligent summary using sessions_history tool
+node ~/.openclaw/skills/memory-manager/summarize-ai.js
+
+# Features:
+# - Fetches real conversation history
+# - Spawns subagent for AI summarization
+# - Preserves technical details and context
+# - Structured output with decisions/actions/questions
+```
+
+### Auto-Refresh Workflow
+
+**Recommended heartbeat integration:**
+```markdown
+## Context Management (every heartbeat)
+1. Run: `~/.openclaw/skills/memory-manager/context-monitor.sh`
+2. If usage > 80%: Run `~/.openclaw/skills/memory-manager/summarize-ai.js`
+3. If usage > 85%: Notify user to run `/new`
+4. Daily at 23:00: `~/.openclaw/skills/memory-manager/organize.sh`
+```
+
+**Manual workflow:**
+```bash
+# 1. Monitor context
+~/.openclaw/skills/memory-manager/context-monitor.sh
+
+# 2. If warning/critical, generate summary
+~/.openclaw/skills/memory-manager/summarize-ai.js
+
+# 3. Review summary
+cat ~/.openclaw/workspace/memory/episodic/$(date +%Y-%m-%d).md
+
+# 4. Refresh session (in chat: /new)
+# Agent will automatically load summary from MEMORY.md
+```
+
 ### Memory Organization
 
 **Manual categorization:**

@@ -1,0 +1,42 @@
+[
+  {
+    "method": "POST",
+    "url": "https://edith.xiaohongshu.com/api/redcaptcha/v2/getconfig"
+  },
+  {
+    "method": "GET",
+    "url": "https://edith.xiaohongshu.com/api/sns/web/v2/user/me"
+  },
+  {
+    "method": "GET",
+    "url": "https://edith.xiaohongshu.com/api/sns/web/v1/system/config"
+  },
+  {
+    "method": "GET",
+    "url": "https://edith.xiaohongshu.com/api/sns/web/v2/user/me"
+  },
+  {
+    "method": "GET",
+    "url": "https://edith.xiaohongshu.com/api/sns/web/v1/search/querytrending?source=Explore&search_type=trend&last_query=&last_query_time=0&word_request_situation=FIRST_ENTER&hint_word=&hint_word_type=&hint_word_request_id="
+  },
+  {
+    "method": "GET",
+    "url": "https://edith.xiaohongshu.com/api/sns/web/v1/zones"
+  },
+  {
+    "method": "GET",
+    "url": "https://edith.xiaohongshu.com/api/sns/web/global/config"
+  },
+  {
+    "method": "GET",
+    "url": "https://edith.xiaohongshu.com/api/sns/web/unread_count"
+  },
+  {
+    "method": "GET",
+    "url": "https://edith.xiaohongshu.com/api/im/redmoji/version"
+  },
+  {
+    "method": "GET",
+    "url": "https://edith.xiaohongshu.com/api/sns/web/unread_count"
+  }
+]
